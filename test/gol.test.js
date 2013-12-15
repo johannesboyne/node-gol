@@ -1,90 +1,102 @@
-var should = require('should');
-var assert = require('assert');
+var tap = require("tap"),
+		test = tap.test;
 
 var gol = require('../gol.js');
 
-describe('the board of game of live', function() {
-	it('should have a list of alive cells that is empty on default', function() {
+test('the board of game of live', function (t) {
+	t.test('should have a list of alive cells that is empty on default', function (t) {
 		var board = new gol.Board();
-		board.aliveCells().should.have.property('length', 0);
+		t.equal(board.aliveCells().length, 0);
+		t.end();
 	});
 
-	it('should let me set cells that are alive', function() {
+	t.test('should let me set cells that are alive', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
-		board.cellAt(1, 1).isAlive().should.be.true;
+		t.ok(board.cellAt(1, 1).isAlive());
+		t.end();
 	});
 
-	it('should let me get a Cell by json', function() {
+	t.test('should let me get a Cell by json', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 2).setAlive();
-		board.cellAt({x: 1, y: 2}).isAlive().should.be.true;
+		t.ok(board.cellAt({x: 1, y: 2}).isAlive());
+		t.end();
 	});
 
-	it('should let me kill cells that are alive', function() {
+	t.test('should let me kill cells that are alive', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
-		board.cellAt(1, 1).isAlive().should.be.true;
+		t.ok(board.cellAt(1, 1).isAlive());
 		board.cellAt(1, 1).setDead();
-		board.cellAt(1, 1).isAlive().should.be.false;
+		t.equal(board.cellAt(1, 1).isAlive(), false);
+		t.end();
 	});
 
-	it('should let alive cells with less than 2 neighbours die', function() {
+	t.test('should let alive cells with less than 2 neighbours die', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
 		board.cellAt(1, 2).setAlive();
 		board.iterate();
-		board.cellAt(1, 1).isAlive().should.be.false;
+		t.equal(board.cellAt(1, 1).isAlive(), false);
+		t.end();
 	});
 
-	it('should let alive cells with two neighbours survive', function() {
+	t.test('should let alive cells with two neighbours survive', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
 		board.cellAt(1, 2).setAlive();
 		board.cellAt(1, 3).setAlive();
 		board.iterate();
-		board.cellAt(1, 2).isAlive().should.be.true;
+		t.ok(board.cellAt(1, 2));
+		t.end();
 	});
 
-	it('should let alive cells with three neighbours survive', function() {
+	t.test('should let alive cells with three neighbours survive', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
 		board.cellAt(1, 2).setAlive();
 		board.cellAt(2, 2).setAlive();
 		board.cellAt(1, 3).setAlive();
 		board.iterate();
-		board.cellAt(1, 2).isAlive().should.be.true;
+		t.ok(board.cellAt(1, 2).isAlive());
+		t.end();
 	});
 
-	it('should give a list of unique dead cells', function() {
+	t.test('should give a list of unique dead cells', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
 		board.cellAt(1, 2).setAlive();
-		board.deadCells().should.have.property('length', 10);
+		t.equal(board.deadCells().length, 10);
+		t.end();
 	});
 
-	it('should resurrect a dead cell with exactly two alive neighbours', function() {
+	t.test('should resurrect a dead cell with exactly two alive neighbours', function (t) {
 		var board = new gol.Board();
 		board.cellAt(1, 1).setAlive();
 		board.cellAt(1, 3).setAlive();
 		board.iterate();
-		board.cellAt(1, 2).isAlive().should.be.true;
+		t.ok(board.cellAt(1, 2).isAlive());
+		t.end();
 	});
 });
 
-describe('a cell of the game of live', function() {
-	it('should have a list of neighbours', function() {
+test('a cell of the game of live', function (t) {
+	t.test('should have a list of neighbours', function (t) {
 		var board = new gol.Board();
-		board.cellAt(1,1).neighbours().should.have.property('length', 8);
+		t.equal(board.cellAt(1,1).neighbours().length, 8);
+		t.end();
 	});
 
-	it('should have a list of alive neighbours', function() {
+	t.test('should have a list of alive neighbours', function (t) {
 		var board = new gol.Board();
-		board.cellAt(1,1).aliveNeighbours().should.have.property('length', 0);
+		t.equal(board.cellAt(1,1).aliveNeighbours().length, 0);
+		t.end();
 	});
 
-	it('should have a list of dead neighbours', function() {
+	t.test('should have a list of dead neighbours', function (t) {
 		var board = new gol.Board();
-		board.cellAt(1, 1).deadNeighbours().should.have.property('length', 8);
-	})
+		t.equal(board.cellAt(1, 1).deadNeighbours().length, 8);
+		t.end();
+	});
 });

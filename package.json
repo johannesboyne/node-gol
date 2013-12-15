@@ -7,16 +7,17 @@
   "dependencies": {
     "underscore": "~1.4.4"
   },
+  "directories": {
+    "test": "test"
+  },
   "devDependencies": {
-    "mocha": "~1.9.0",
-    "should": "2.0.2"
+    "tap": "~0.4.6"
   },
   "scripts": {
-    "test": "make test"
+    "test": "tap ./test"
   },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
   }
 }
-
