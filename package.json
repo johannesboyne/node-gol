@@ -1,0 +1,22 @@
+{
+  "name": "node-gol",
+  "version": "0.1.0",
+  "repository": {
+    "url": "git@github.com:rradczewski/node-gol.git"
+  },
+  "dependencies": {
+    "underscore": "~1.4.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.9.0",
+    "should": "2.0.2"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
+
